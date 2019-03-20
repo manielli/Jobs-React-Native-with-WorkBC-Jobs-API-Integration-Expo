@@ -3,7 +3,10 @@ import { View, Text } from 'react-native';
 
 export default class ReviewScreen extends React.Component {
     static navigationOptions = {
-        
+        title: 'Review Jobs',
+        headerRight: (
+            <Text>Go Right</Text>
+        )
     }
 
     render() {
