@@ -1,20 +1,23 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { TabNavigator } from 'react-navigation';
+import { createAppContainer, createBottomTabNavigator } from 'react-navigation';
 
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 
-export default class App extends React.Component {
+const MainNavigator = createBottomTabNavigator({
+  welcome: { screen: WelcomeScreen },
+  auth: { screen: AuthScreen }  
+});
+
+const AppContainer = createAppContainer(MainNavigator);
+
+class App extends React.Component {
   render() {
-    const MainNavigator = TabNavigator({
-      welcome: { screen: WelcomeScreen },
-      auth: { screen: AuthScreen }  
-    });
 
     return (
       <View style={styles.container}>
-        <MainNavigator />
+        <AppContainer />
       </View>
     );
   }
@@ -28,3 +31,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default AppContainer;
