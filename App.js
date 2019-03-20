@@ -12,13 +12,10 @@ const MainNavigator = createBottomTabNavigator({
 
 const AppContainer = createAppContainer(MainNavigator);
 
-class App extends React.Component {
+export default class App extends React.Component {
   render() {
-
     return (
-      <View style={styles.container}>
-        <AppContainer />
-      </View>
+      <AppContainer />
     );
   }
 }
@@ -31,5 +28,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-export default AppContainer;
