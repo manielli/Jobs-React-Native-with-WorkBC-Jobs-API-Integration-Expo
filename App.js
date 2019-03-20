@@ -22,7 +22,7 @@ const MainNavigator = createBottomTabNavigator({
       deck: { screen: DeckScreen },
       review: {
         screen: createStackNavigator({
-          review: { screen: ReviewScreen },
+          reviews: { screen: ReviewScreen },
           settings: { screen: SettingsScreen }
         })
       }
