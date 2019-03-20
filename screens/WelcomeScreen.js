@@ -12,6 +12,6 @@ export default class WelcomeScreen extends React.Component {
                 <Text>WelcomeScreen</Text>
                 <Text>WelcomeScreen</Text>
             </View>
-        )
+        );
     }
 }
