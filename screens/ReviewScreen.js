@@ -7,7 +7,12 @@ export default class ReviewScreen extends React.Component {
         return { 
             headerTitle: 'Review Jobs',
             headerRight: (
-                <Button title="Settings" onPress={() => navigation.navigate('settings')} />
+                <Button 
+                    title="Settings" 
+                    onPress={() => navigation.navigate('settings')} 
+                    type="clear"
+                    titleStyle={{color: 'rgba(0, 122, 255, 1)'}}
+                />
             )
         };
     }
