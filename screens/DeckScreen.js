@@ -6,6 +6,11 @@ export default class DeckScreen extends React.Component {
         return (
             <View>
                 <Text>DeckScreen</Text>
+                <Text>DeckScreen</Text>
+                <Text>DeckScreen</Text>
+                <Text>DeckScreen</Text>
+                <Text>DeckScreen</Text>
+                <Text>DeckScreen</Text>
             </View>
         );
     }

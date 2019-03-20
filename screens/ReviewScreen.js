@@ -6,6 +6,11 @@ export default class ReviewScreen extends React.Component {
         return (
             <View>
                 <Text>ReviewScreen</Text>
+                <Text>ReviewScreen</Text>
+                <Text>ReviewScreen</Text>
+                <Text>ReviewScreen</Text>
+                <Text>ReviewScreen</Text>
+                <Text>ReviewScreen</Text>
             </View>
         );
     }

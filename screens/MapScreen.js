@@ -6,6 +6,11 @@ export default class MapScreen extends React.Component {
         return (
             <View>
                 <Text>MapScreen</Text>
+                <Text>MapScreen</Text>
+                <Text>MapScreen</Text>
+                <Text>MapScreen</Text>
+                <Text>MapScreen</Text>
+                <Text>MapScreen</Text>
             </View>
         );
     }

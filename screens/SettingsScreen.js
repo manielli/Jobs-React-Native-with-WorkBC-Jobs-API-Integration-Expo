@@ -6,6 +6,11 @@ export default class SettingsScreem extends React.Component {
         return (
             <View>
                 <Text>SettingsScreen</Text>
+                <Text>SettingsScreen</Text>
+                <Text>SettingsScreen</Text>
+                <Text>SettingsScreen</Text>
+                <Text>SettingsScreen</Text>
+                <Text>SettingsScreen</Text>
             </View>
         );
     }

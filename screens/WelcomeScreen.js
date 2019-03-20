@@ -6,6 +6,11 @@ export default class WelcomeScreen extends React.Component {
         return (
             <View>
                 <Text>WelcomeScreen</Text>
+                <Text>WelcomeScreen</Text>
+                <Text>WelcomeScreen</Text>
+                <Text>WelcomeScreen</Text>
+                <Text>WelcomeScreen</Text>
+                <Text>WelcomeScreen</Text>
             </View>
         )
     }
