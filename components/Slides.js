@@ -5,8 +5,8 @@ export default class Slides extends React.Component {
     renderSlides() {
         return this.props.data.map((slide) => {
             return (
-                <View key={slide.text} >
-                    <Text>{slide.text}</Text>
+                <View key={slide.text} style={styles.slideStyle} >
+                    <Text style={styles.slideText} >{slide.text}</Text>
                 </View>
             );
         });
@@ -23,3 +23,14 @@ export default class Slides extends React.Component {
         );
     }
 }
+
+const styles = {
+    slideStyle: {
+        flex: 1,
+        justifyContent: 'center',
+        aligItems: 'center'
+    },
+    slideText: {
+        fontSize: 30
+    }
+};
