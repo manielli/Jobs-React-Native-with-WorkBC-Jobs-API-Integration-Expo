@@ -17,6 +17,8 @@ export const facebookLogin = () => async dispatch => {
     }
 };
 
-const doFacebookLogin = () => {
-    
+const doFacebookLogin = async () => {
+    let result = await Facebook.logInWithReadPermissionsAsync('2422058358062134', {
+        permission: ['public_profile'];
+    });
 };
