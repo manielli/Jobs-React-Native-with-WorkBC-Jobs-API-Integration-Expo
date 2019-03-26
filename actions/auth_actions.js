@@ -20,7 +20,7 @@ export const facebookLogin = () => async dispatch => {
     }
 };
 
-const doFacebookLogin = async (dispatch) => {
+const doFacebookLogin = async dispatch => {
     let { type, token } = await Facebook.logInWithReadPermissionsAsync('2422058358062134', {
         permission: ['public_profile'];
     });
@@ -28,4 +28,10 @@ const doFacebookLogin = async (dispatch) => {
     if (type === 'cancel') {
         return dispatch({ type: FACEBOOK_LOGIN_FAIL})
     }
+
+    await AsyncStorage.setItem('fb_token', token);
+    // AsyncStorage.setItem('fb_token', token); could work too, 
+    // because there is no reason for the AsyncStorage.setItem('fb_token', token)
+    // doesn't do its job
+    dispatch({ type: FACEBOOK_LOGIN_SUCCESS, payload: token });
 };
