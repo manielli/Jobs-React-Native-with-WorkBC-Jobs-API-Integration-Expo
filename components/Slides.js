@@ -10,14 +10,14 @@ import { Button } from 'react-native-elements';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default class Slides extends React.Component {
-    renderLastSlide(index) {
+    renderLastSlide(index, slide) {
         if (index === this.props.data.length - 1) { 
             return (
                 <Button 
                     title="Onwards!"
-                    raised
                     buttonStyle={styles.buttonStyle}
                     onPress={this.props.onComplete}
+                    style={{ backgroundColor: slide.color }}
                 />
             );
         }
@@ -28,7 +28,7 @@ export default class Slides extends React.Component {
             return (
                 <View key={slide.text} style={[styles.slideStyle, { backgroundColor: slide.color }]} >
                     <Text style={styles.slideText} >{slide.text}</Text>
-                    {this.renderLastSlide(index)}
+                    {this.renderLastSlide(index, slide)}
                 </View>
             );
         });
@@ -60,6 +60,8 @@ const styles = {
         color: 'white'
     },
     buttonStyle: {
-        backgroundColor: '#0288D1'
+        backgroundColor: '#0288D1',
+        width: 200,
+        alignSelf: 'center'
     }
 };
