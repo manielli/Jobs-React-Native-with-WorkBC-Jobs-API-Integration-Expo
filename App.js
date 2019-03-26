@@ -6,6 +6,8 @@ import {
   createStackNavigator 
 } from 'react-navigation';
 
+import { Provider } from 'react-redux';
+
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import MapScreen from './screens/MapScreen';
