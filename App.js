@@ -31,6 +31,8 @@ const MainNavigator = createBottomTabNavigator({
       }
     })
   }  
+}, { 
+  lazy: true 
 });
 
 const AppContainer = createAppContainer(MainNavigator);
