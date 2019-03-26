@@ -7,6 +7,7 @@ import {
 } from 'react-navigation';
 
 import { Provider } from 'react-redux';
+import store from './store';
 
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
@@ -37,7 +38,9 @@ const AppContainer = createAppContainer(MainNavigator);
 export default class App extends React.Component {
   render() {
     return (
-      <AppContainer />
+      <Provider store={store} >
+        <AppContainer />
+      </Provider>
     );
   }
 }
