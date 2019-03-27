@@ -9,6 +9,13 @@ import * as actions from '../actions';
 class AuthScreen extends React.Component {
     componentDidMount() {
         this.props.facebookLogin();
+        this.onAuthComplete(this.props);
+    }
+
+    onAuthComplete(props) {
+        if (props.token) {
+            this.props.navigation.navigate('map');
+        }
     }
 
     render() {
