@@ -1,9 +1,10 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import { MapView } from 'expo';
 
 export default class MapScreen extends React.Component {
     state = { 
+        mapLoaded: false,
         region: {
             longitude: -122,
             latitude: 37,
@@ -12,7 +13,23 @@ export default class MapScreen extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.setState({ mapLoaded: true });
+    }
+
     render() {
+        if (!this.state.mapLoaded) {
+            return (
+                <View
+                    style={{
+                        flex: 1,
+                        justifyContent: 'center'
+                    }}
+                >
+                    <ActivityIndicator size='large' />
+                </View>
+            );
+        }
         return (
             <View style={{ flex: 1 }} >
                 <MapView 
