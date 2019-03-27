@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import React from 'react';
-import Slides from '../components/Slides';
 import { AppLoading } from 'expo';
 import { AsyncStorage } from 'react-native';
+import Slides from '../components/Slides';
 
 const SLIDE_DATA = [
     { text: 'Welcome to this JobApp', color: '#03A9F4' },
@@ -33,7 +33,7 @@ export default class WelcomeScreen extends React.Component {
 
     render() {
         if (_.isNull(this.state.token)) {
-            return <AppLoading />
+            return <AppLoading />;
         }
 
         return (
