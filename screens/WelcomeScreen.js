@@ -8,6 +8,10 @@ const SLIDE_DATA = [
 ];
 
 export default class WelcomeScreen extends React.Component {
+    static navigationOptions = {
+        tabBarVisible: false
+    }
+    
     onSlidesComplete = () => {
         this.props.navigation.navigate('auth');
     }

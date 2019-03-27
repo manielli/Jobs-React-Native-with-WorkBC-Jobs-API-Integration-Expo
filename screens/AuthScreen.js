@@ -7,6 +7,10 @@ import * as actions from '../actions';
 // creator rather than importing all action creators
 
 class AuthScreen extends React.Component {
+    static navigationOptions = {
+        tabBarVisible: false
+    }
+    
     componentDidMount() {
         this.props.facebookLogin();
     }

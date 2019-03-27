@@ -31,9 +31,14 @@ const MainNavigator = createBottomTabNavigator({
       }
     })
   }  
-}, { 
-  lazy: true 
+}, {
+  // lazy: true,
+  navigationOptions: {
+    tabBarVisible: false
+  }
 });
+// In newer react navigation lazy is set to true by default
+// so we don't need to use it
 
 const AppContainer = createAppContainer(MainNavigator);
 
