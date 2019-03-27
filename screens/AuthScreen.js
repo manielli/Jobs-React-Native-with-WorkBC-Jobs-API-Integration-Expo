@@ -10,6 +10,14 @@ class AuthScreen extends React.Component {
     componentDidMount() {
         this.props.facebookLogin();
         this.onAuthComplete(this.props);
+        // This could be unnecessary beacuse
+        // we have already used the componentWilReceiveProps
+        // lifecycle method and that should take care of it
+        // In some cases it may be needed.
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.onAuthComplete(nextProps);
     }
 
     onAuthComplete(props) {
