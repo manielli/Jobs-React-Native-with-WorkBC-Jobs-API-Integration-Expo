@@ -23,7 +23,7 @@ export default class WelcomeScreen extends React.Component {
         if (token) {
             this.props.navigation.navigate('map');
         } else {
-            this.setState({ token });
+            this.setState({ token: false });
         }
     }
 
