@@ -22,6 +22,7 @@ export default class WelcomeScreen extends React.Component {
         // just navigate the user to map screen, and so:
         if (token) {
             this.props.navigation.navigate('map');
+            this.setState({ token });
         } else {
             this.setState({ token: false });
         }
