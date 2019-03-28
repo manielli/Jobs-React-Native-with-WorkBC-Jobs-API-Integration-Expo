@@ -6,11 +6,11 @@ export default class MapScreen extends React.Component {
     state = { 
         mapLoaded: false,
         region: {
-            longitude: -122,
-            latitude: 37,
-            longitudeDelta: 0.04,
-            latitudeDelta: 0.09
-        }
+            latitude: 49.28883325048375,
+            latitudeDelta: 0.28942351176355174,
+            longitude: -123.13505564733309,
+            longitudeDelta: 0.23888898445666484,
+          }
     }
 
     componentDidMount() {
@@ -18,6 +18,7 @@ export default class MapScreen extends React.Component {
     }
 
     onRegionChangeComplete = (region) => {
+        console.log(region);
         this.setState({ region });
     }
 
