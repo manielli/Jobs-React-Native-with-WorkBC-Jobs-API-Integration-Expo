@@ -1,8 +1,11 @@
 import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { MapView } from 'expo';
+import { connect } from 'react-redux';
 
-export default class MapScreen extends React.Component {
+import * as actions from '../actions';
+
+class MapScreen extends React.Component {
     state = { 
         mapLoaded: false,
         region: {
@@ -46,3 +49,5 @@ export default class MapScreen extends React.Component {
         );
     }
 }
+
+export default connect(null, actions)(MapScreen);
