@@ -49,10 +49,12 @@ export const fetchJobs = (region) => {
             // let { data } = await axios.get(url);
             // dispatch({ type: FETCH_JOBS, payload: data });
             // console.log(data);
-            
+
             const currentDate = new Date();
-            const lastRequestDate = moment(currentDate).subtract(1, 'months');
-            console.log(lastRequestDate);
+            const lastRequestDate = moment(currentDate)
+                                        .subtract(3, 'months')
+                                        .toISOString()
+                                        .split('T')[0];
             const { latitude, longitude } = region;
             Location.setApiKey(`${constant.apiKey}`);
             let address = await Location.reverseGeocodeAsync({ latitude, longitude });
