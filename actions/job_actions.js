@@ -50,13 +50,16 @@ export const fetchJobs = (region) => {
             // dispatch({ type: FETCH_JOBS, payload: data });
             // console.log(data);
 
+            let { status } = await Permissions.askAsync(Permissions.LOCATION);
             const currentDate = new Date();
             const lastRequestDate = moment(currentDate)
                                         .subtract(3, 'months')
                                         .toISOString()
                                         .split('T')[0];
+            if (status === 'granted') {
+                Location.setApiKey(`${constant.apiKey}`);
+            }
             const { latitude, longitude } = region;
-            Location.setApiKey(`${constant.apiKey}`);
             let address = await Location.reverseGeocodeAsync({ latitude, longitude });
             let { data } = await axios.post(JOB_ROOT_URL, { ...JOB_QUERY_PARAMS, city: address[0].city, lastRequestDate: lastRequestDate });
             const { jobs, count } = data;
