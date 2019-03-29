@@ -5,6 +5,7 @@ import { FETCH_JOBS } from './types';
 import { constant } from '../constants';
 import JOB_DATA from './IndeedJobData.json';
 import { Location, Permissions } from 'expo';
+import moment from 'moment';
 
 // const JOB_ROOT_URL = 'http://api.indeed.com/ads/apisearch?';
 const JOB_ROOT_URL = 'https://workbcjobs.api.gov.bc.ca/v1/jobs'
@@ -19,9 +20,19 @@ const JOB_ROOT_URL = 'https://workbcjobs.api.gov.bc.ca/v1/jobs'
 // };
 
 const JOB_QUERY_PARAMS = {
-    lastRequestDate: '2018-07-01',
     region: '2',
-    jobTypes: [ 1 ],
+    jobTypes: [ 
+        { id: 1 }, 
+    	{ id: 2 }, 
+    	{ id: 3 }, 
+    	{ id: 6 },
+    	{ id: 9 },
+    	{ id: 10 },
+    	{ id: 11 },
+    	{ id: 12 },
+    	{ id: 13 },
+        { id: 14 } 
+    ],
     majorProjects: false
 };
 
@@ -38,26 +49,30 @@ export const fetchJobs = (region) => {
             // let { data } = await axios.get(url);
             // dispatch({ type: FETCH_JOBS, payload: data });
             // console.log(data);
-
+            
+            const currentDate = new Date();
+            const lastRequestDate = moment(currentDate).subtract(1, 'months');
+            console.log(lastRequestDate);
             const { latitude, longitude } = region;
             Location.setApiKey(`${constant.apiKey}`);
             let address = await Location.reverseGeocodeAsync({ latitude, longitude });
-            let { data } = await axios.post(JOB_ROOT_URL, { ...JOB_QUERY_PARAMS, city: address[0].city });
-            const { jobs } = data;
+            let { data } = await axios.post(JOB_ROOT_URL, { ...JOB_QUERY_PARAMS, city: address[0].city, lastRequestDate: lastRequestDate });
+            const { jobs, count } = data;
             const filteredData = jobs.filter((element) => {
                 return element.employerName !== null && 
                 element.jobDescription !== null && 
-                element.jobTitle !== null && 
-                element.jobTypes !== null;
+                element.jobTitle !== null 
             });
             dispatch({ type: FETCH_JOBS, payload: filteredData });
-            console.log(filteredData);
+            // console.log(filteredData);
+            console.log(`${count} jobs found!`);
 
             // let data = JOB_DATA;
             // dispatch({ type: FETCH_JOBS, payload: data });
             // console.log(data);
         } catch (error) {
             console.log(error);
+            // console.error(error);
         }
     };
 };
