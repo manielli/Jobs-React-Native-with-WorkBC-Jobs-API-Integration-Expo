@@ -70,7 +70,7 @@ export const fetchJobs = (region) => {
             });
             dispatch({ type: FETCH_JOBS, payload: filteredData });
             // console.log(filteredData);
-            console.log(`${count} jobs found!`);
+            // console.log(`${count} jobs found!`);
 
             // let data = JOB_DATA;
             // dispatch({ type: FETCH_JOBS, payload: data });

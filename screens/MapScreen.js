@@ -67,8 +67,8 @@ const styles = {
     buttonContainer: {
         position: 'absolute',
         bottom: 20,
-        left: 0,
-        right: 0
+        left: 10,
+        right: 10
     }
 };
 
