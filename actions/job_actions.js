@@ -42,10 +42,16 @@ export const fetchJobs = (region) => {
             const { latitude, longitude } = region;
             Location.setApiKey(`${constant.apiKey}`);
             let address = await Location.reverseGeocodeAsync({ latitude, longitude });
-            console.log(address);
-            let { data } = await axios.post(JOB_ROOT_URL, { ...JOB_QUERY_PARAMS, city: address.city });
-            dispatch({ type: FETCH_JOBS, payload: data });
-            console.log(data);
+            let { data } = await axios.post(JOB_ROOT_URL, { ...JOB_QUERY_PARAMS, city: address[0].city });
+            const { jobs } = data;
+            const filteredData = jobs.filter((element) => {
+                return element.employerName !== null && 
+                element.jobDescription !== null && 
+                element.jobTitle !== null && 
+                element.jobTypes !== null;
+            });
+            dispatch({ type: FETCH_JOBS, payload: filteredData });
+            console.log(filteredData);
 
             // let data = JOB_DATA;
             // dispatch({ type: FETCH_JOBS, payload: data });
