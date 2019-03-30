@@ -57,8 +57,11 @@ export const fetchJobs = (region, callback) => {
             }
             const lastRequestDate = getLastRequestDate();
             const { latitude, longitude } = region;
+            
             let address = await Location.reverseGeocodeAsync({ latitude, longitude });
+            
             let { data } = await axios.post(JOB_ROOT_URL, { ...JOB_QUERY_PARAMS, city: address[0].city, lastRequestDate: lastRequestDate });
+            
             const filteredData = getFilteredData(data);
             dispatch({ type: FETCH_JOBS, payload: filteredData });
             console.log(filteredData);
