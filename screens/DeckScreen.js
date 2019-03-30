@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { connect } from 'react-redux';
+import { jobsFetch } from '../actions';
 
-export default class DeckScreen extends React.Component {
+class DeckScreen extends React.Component {
     render() {
         return (
             <View>
@@ -15,3 +17,9 @@ export default class DeckScreen extends React.Component {
         );
     }
 }
+
+function mapStateToProps({ jobs }) {
+    return { jobs: jobs.result };
+}
+
+export default connect(mapStateToProps, { jobsFetch })(DeckScreen);
