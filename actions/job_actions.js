@@ -41,13 +41,14 @@ const JOB_QUERY_PARAMS = {
 //     return `${JOB_ROOT_URL}${query}`;
 // };
 
-export const fetchJobs = (region) => {
+export const fetchJobs = (region, callback) => {
     return async function(dispatch) {
         try {
             // let zip = await reverseGeocode(region);
             // const url = buildJobsUrl(zip);
             // let { data } = await axios.get(url);
             // dispatch({ type: FETCH_JOBS, payload: data });
+            // callback();
             // console.log(data);
 
             let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -71,9 +72,12 @@ export const fetchJobs = (region) => {
             dispatch({ type: FETCH_JOBS, payload: filteredData });
             // console.log(filteredData);
             // console.log(`${count} jobs found!`);
+            callback();
+            
 
             // let data = JOB_DATA;
             // dispatch({ type: FETCH_JOBS, payload: data });
+            // callback();
             // console.log(data);
         } catch (error) {
             console.log(error);
