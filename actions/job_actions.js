@@ -57,11 +57,8 @@ export const fetchJobs = (region, callback) => {
             }
             const lastRequestDate = getLastRequestDate();
             const { latitude, longitude } = region;
-            
             let address = await Location.reverseGeocodeAsync({ latitude, longitude });
-            
             let { data } = await axios.post(JOB_ROOT_URL, { ...JOB_QUERY_PARAMS, city: address[0].city, lastRequestDate: lastRequestDate });
-            
             const filteredData = getFilteredData(data);
             dispatch({ type: FETCH_JOBS, payload: filteredData });
             console.log(filteredData);
@@ -88,12 +85,12 @@ const getLastRequestDate = () => {
 };
 
 const getFilteredData = (data) => {
-    const { jobs, count } = data;
-    const filteredData = jobs.filter((element) => {
+    const { jobs } = data;
+    const filteredJobs = jobs.filter((element) => {
         return element.employerName !== null &&
             element.jobDescription !== null &&
             element.jobTitle !== null;
     });
-    console.log(`${count} jobs found!`);
-    return filteredData;
+    const filteredJobsCount = filteredJobs.length;
+    return { filteredJobsCount, filteredJobs };
 };

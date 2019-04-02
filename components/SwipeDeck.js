@@ -102,13 +102,14 @@ class SwipeDeck extends Component {
                 return (
                     <Animated.View 
                         key={item.id} 
-                        style={[this.getCardStyle(), styles.cardStyle, {zIndex:  1}]} 
+                        style={[this.getCardStyle(), styles.cardStyle, { zIndex: 1 }]} 
                         {...this.state.panResponder.panHandlers}
                     >
                         {this.props.renderCard(item)}
                     </Animated.View>
                 );
-            };
+            }
+
             return (
                 <Animated.View 
                     key={item.id} 
@@ -125,7 +126,7 @@ class SwipeDeck extends Component {
             <View>
                 {this.renderCards()}
             </View>
-        )
+        );
     }
 }
 

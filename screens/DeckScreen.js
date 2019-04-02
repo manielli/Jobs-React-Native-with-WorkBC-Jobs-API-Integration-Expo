@@ -4,16 +4,18 @@ import { connect } from 'react-redux';
 import { MapView } from 'expo';
 import { Card, Button } from 'react-native-elements';
 import SwipeDeck from '../components/SwipeDeck';
-import { jobsFetch } from '../actions';
+import { fetchJobs } from '../actions';
 
 class DeckScreen extends React.Component {
     renderCard(job) {
         return (
            <Card title={job.jobTitle} >
-                <View>
+            <MapView />
+                <View style={styles.detailWrapper} >
                     <Text>{job.employerName}</Text>
-                    <Text>{job.postedDate}</Text>
+                    <Text>{job.postedDate.split('T')[0]}</Text>
                 </View>
+                <Text>{job.jobDescription.replace(/<b>/g, '').replace(/<\/b>/g, '')}</Text>
            </Card>             
         );
     }
@@ -21,9 +23,7 @@ class DeckScreen extends React.Component {
     renderNoMoreCards() {
         return (
             <Card>
-                <View>
-                    <Text>No More Cards</Text>
-                </View>
+                <View title='No More Cards' />
             </Card>
         );
     }
@@ -41,8 +41,16 @@ class DeckScreen extends React.Component {
     }
 }
 
+const styles = {
+    detailWrapper: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginBottom: 10    
+    }
+};
+
 function mapStateToProps({ jobs }) {
-    return { jobs: jobs.result };
+    return { jobs: jobs.filteredJobs };
 }
 
-export default connect(mapStateToProps, { jobsFetch })(DeckScreen);
+export default connect(mapStateToProps, { fetchJobs })(DeckScreen);
