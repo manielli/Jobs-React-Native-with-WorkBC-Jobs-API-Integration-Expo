@@ -9,8 +9,8 @@ import { fetchJobs } from '../actions';
 class DeckScreen extends React.Component {
     renderCard(job) {
         const initialRegion = {
-            longitude: job.longitude,
-            latitude: job.latitude,
+            longitude: -123.13505564733309,
+            latitude: 49.28883325048375,
             latitudeDelta: 0.045,
             longitudeDelta: 0.02
         };
@@ -20,8 +20,9 @@ class DeckScreen extends React.Component {
                 <View style={{ height: 300 }} >
                     <MapView 
                         scrollEnabled={false}
-                        style={{ flex: 1 }}
-                        cacheEnabled={Platform.OS === 'android' ? true : false}
+                        style={{ flex: 1, marginBottom: 25 }}
+                        // cacheEnabled={Platform.OS === 'android' ? true : false}
+                        cacheEnabled
                         initialRegion={initialRegion}
                     />
                 </View>
@@ -37,7 +38,9 @@ class DeckScreen extends React.Component {
     renderNoMoreCards() {
         return (
             <Card>
-                <View title='No More Cards' />
+                <View title='No More Cards'>
+                    <Text style={{ alignSelf: 'center' }} >No More Cards</Text>
+                </View>
             </Card>
         );
     }

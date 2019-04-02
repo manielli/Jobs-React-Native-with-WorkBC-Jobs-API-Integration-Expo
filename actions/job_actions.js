@@ -8,7 +8,8 @@ import { Location, Permissions } from 'expo';
 import moment from 'moment';
 
 // const JOB_ROOT_URL = 'http://api.indeed.com/ads/apisearch?';
-const JOB_ROOT_URL = 'https://workbcjobs.api.gov.bc.ca/v1/jobs'
+const JOB_ROOT_URL = 'https://workbcjobs.api.gov.bc.ca/v1/jobs';
+const PLACE_REQUEST_ROOT_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?';
 
 // const JOB_QUERY_PARAMS = {
 //     publisher: '4201738803816157',
@@ -41,6 +42,15 @@ const JOB_QUERY_PARAMS = {
 //     return `${JOB_ROOT_URL}${query}`;
 // };
 
+const buildPlaceRequestUrl = (name, region) => {
+    const query = qs.stringify({ 
+        key: constant.apiKey,
+        radius: 10000, 
+        location: `${region.latitude},${region.longitude}`, 
+        keyword: name});
+    return `${PLACE_REQUEST_ROOT_URL}${query}`;
+};
+
 export const fetchJobs = (region, callback) => {
     return async function(dispatch) {
         try {
@@ -58,8 +68,19 @@ export const fetchJobs = (region, callback) => {
             const lastRequestDate = getLastRequestDate();
             const { latitude, longitude } = region;
             let address = await Location.reverseGeocodeAsync({ latitude, longitude });
-            let { data } = await axios.post(JOB_ROOT_URL, { ...JOB_QUERY_PARAMS, city: address[0].city, lastRequestDate: lastRequestDate });
+            const cityOfAddress = address[0].city;
+            let { data } = await axios.post(JOB_ROOT_URL, { ...JOB_QUERY_PARAMS, city: cityOfAddress, lastRequestDate: lastRequestDate });
             const filteredData = getFilteredData(data);
+            const { filteredJobs } = filteredData;
+
+            filteredJobs.forEach( async (element) => {
+                const url = buildPlaceRequestUrl(element.employerName, region);
+                let { data } = await axios.get(url);
+                console.log(data.results[0]);
+            });
+            // const filteredDataWithLocations = getFilteredDataWithLocations(filteredData);
+
+
             dispatch({ type: FETCH_JOBS, payload: filteredData });
             console.log(filteredData);
             callback();
@@ -86,11 +107,17 @@ const getLastRequestDate = () => {
 
 const getFilteredData = (data) => {
     const { jobs } = data;
-    const filteredJobs = jobs.filter((element) => {
+    const filteredJobsTemp = jobs.filter((element) => {
         return element.employerName !== null &&
             element.jobDescription !== null &&
             element.jobTitle !== null;
     });
-    const filteredJobsCount = filteredJobs.length;
+    const filteredJobsCount = filteredJobsTemp.length;
+    const filteredJobs = filteredJobsTemp.slice(0,10);
     return { filteredJobsCount, filteredJobs };
 };
+
+// const getFilteredDataWithLocations = (filteredData) => {
+
+
+// };
