@@ -11,8 +11,8 @@ class DeckScreen extends React.Component {
         const initialRegion = {
             longitude: job.location.lng,
             latitude: job.location.lat,
-            latitudeDelta: 0.02,
-            longitudeDelta: 0.0175
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01
         };
 
         return (

@@ -7,10 +7,12 @@ import JOB_DATA from './IndeedJobData.json';
 import { Location, Permissions } from 'expo';
 import moment from 'moment';
 
+// The no-longer-available indeed.com jobs api root URL
 // const JOB_ROOT_URL = 'http://api.indeed.com/ads/apisearch?';
 const JOB_ROOT_URL = 'https://workbcjobs.api.gov.bc.ca/v1/jobs';
 const PLACE_REQUEST_ROOT_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?';
 
+// The no-longer-available indeed.com job query params
 // const JOB_QUERY_PARAMS = {
 //     publisher: '4201738803816157',
 //     format: 'json',
@@ -37,6 +39,8 @@ const JOB_QUERY_PARAMS = {
     majorProjects: true
 };
 
+// The indeed.com job api is no longer available so this url builder
+// helper function is not valid anymore
 // const buildJobsUrl = (zip) => {
 //     const query = qs.stringify({ ...JOB_QUERY_PARAMS, l: zip });
 //     return `${JOB_ROOT_URL}${query}`;
@@ -55,6 +59,7 @@ const buildPlaceRequestUrl = (name, region) => {
 export const fetchJobs = (region, callback) => {
     return async function(dispatch) {
         try {
+            // The indeed.com job api action creator section
             // let zip = await reverseGeocode(region);
             // const url = buildJobsUrl(zip);
             // let { data } = await axios.get(url);
@@ -72,34 +77,12 @@ export const fetchJobs = (region, callback) => {
             const cityOfAddress = address[0].city;
             let { data } = await axios.post(JOB_ROOT_URL, { ...JOB_QUERY_PARAMS, city: cityOfAddress, lastRequestDate: lastRequestDate });
             const filteredData = getFilteredData(data);
-            const { filteredJobs } = filteredData;
-            
-            let filteredJobsWithLocations = await filteredJobs.map( async (element) => {
-                try {
-                    const url = buildPlaceRequestUrl(element.employerName, region);
-                    let { data } = await axios.get(url);
-                    if (data.results.length === 0) {
-                        element['location'] = { 
-                            lng: -123.13505564733309, 
-                            lat: 49.28883325048375
-                        }
-                    } else {
-                        const { location } = data.results[0].geometry;
-                        element['location'] = location;
-                        
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-                return element;
-            });
-
-            let filteredJobsWithGeoLocation = await Promise.all(filteredJobsWithLocations);
-            const filteredJobsWithGeoLocationLength = filteredJobsWithGeoLocation.length;
-            const filteredDataWithGeoLocation = { filteredJobsWithGeoLocation, filteredJobsWithGeoLocationLength }
+            const filteredDataWithGeoLocation = await getFilteredDataWithGeoLocation(filteredData, region);
             dispatch({ type: FETCH_JOBS, payload: filteredDataWithGeoLocation });
             callback();
             
+            // A hardcoded jobs data into a JSON file to make
+            // the no-longer-available indeed.com job api work
             // let data = JOB_DATA;
             // dispatch({ type: FETCH_JOBS, payload: data });
             // callback();
@@ -107,6 +90,7 @@ export const fetchJobs = (region, callback) => {
         } catch (error) {
             console.log(error);
             // console.error(error);
+            // The above is for indeed.com job api error handling
         }
     };
 };
@@ -132,5 +116,29 @@ const getFilteredData = (data) => {
     return { filteredJobsCount, filteredJobs };
 };
 
-// const getFilteredDataWithLocations = (filteredData) => {
-// };
+const getFilteredDataWithGeoLocation = async (filteredData, region) => {
+    const { filteredJobs } = filteredData;
+    let filteredJobsWithLocations = await filteredJobs.map( async (element) => {
+        try {
+            const url = buildPlaceRequestUrl(element.employerName, region);
+            let { data } = await axios.get(url);
+            if (data.results.length === 0) {
+                element['location'] = { 
+                    lng: -123.13505564733309, 
+                    lat: 49.28883325048375
+                }
+            } else {
+                const { location } = data.results[0].geometry;
+                element['location'] = location;  
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        return element;
+    });
+
+    let filteredJobsWithGeoLocation = await Promise.all(filteredJobsWithLocations);
+    const filteredJobsWithGeoLocationLength = filteredJobsWithGeoLocation.length;
+    const filteredDataWithGeoLocation = { filteredJobsWithGeoLocation, filteredJobsWithGeoLocationLength };
+    return filteredDataWithGeoLocation;
+};
