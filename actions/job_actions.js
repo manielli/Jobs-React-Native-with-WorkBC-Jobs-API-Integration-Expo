@@ -39,23 +39,6 @@ const JOB_QUERY_PARAMS = {
     majorProjects: true
 };
 
-// The indeed.com job api is no longer available so this url builder
-// helper function is not valid anymore
-// const buildJobsUrl = (zip) => {
-//     const query = qs.stringify({ ...JOB_QUERY_PARAMS, l: zip });
-//     return `${JOB_ROOT_URL}${query}`;
-// };
-
-const buildPlaceRequestUrl = (name, region) => {
-    const query = qs.stringify({ 
-        key: constant.apiKey,
-        radius: 5000, 
-        location: `${region.latitude},${region.longitude}`, 
-        keyword: `${name}`
-    });
-    return `${PLACE_REQUEST_ROOT_URL}${query}`;
-};
-
 export const fetchJobs = (region, callback) => {
     return async function(dispatch) {
         try {
@@ -75,10 +58,14 @@ export const fetchJobs = (region, callback) => {
             const { latitude, longitude } = region;
             let address = await Location.reverseGeocodeAsync({ latitude, longitude });
             const cityOfAddress = address[0].city;
-            let { data } = await axios.post(JOB_ROOT_URL, { ...JOB_QUERY_PARAMS, city: cityOfAddress, lastRequestDate: lastRequestDate });
+            let { data } = await axios.post(JOB_ROOT_URL, { 
+                ...JOB_QUERY_PARAMS, 
+                city: cityOfAddress, 
+                lastRequestDate: lastRequestDate 
+            });
             const filteredData = getFilteredData(data);
-            const filteredDataWithGeoLocation = await getFilteredDataWithGeoLocation(filteredData, region);
-            dispatch({ type: FETCH_JOBS, payload: filteredDataWithGeoLocation });
+            const jobsData = await getFilteredDataWithGeoLocation(filteredData, region);
+            dispatch({ type: FETCH_JOBS, payload: jobsData });
             callback();
             
             // A hardcoded jobs data into a JSON file to make
@@ -114,6 +101,23 @@ const getFilteredData = (data) => {
     // const filteredJobs = filteredJobsTemp.slice(-10);
     const filteredJobsCount = filteredJobs.length;
     return { filteredJobsCount, filteredJobs };
+};
+
+// The indeed.com job api is no longer available so this url builder
+// helper function is not valid anymore
+// const buildJobsUrl = (zip) => {
+//     const query = qs.stringify({ ...JOB_QUERY_PARAMS, l: zip });
+//     return `${JOB_ROOT_URL}${query}`;
+// };
+
+const buildPlaceRequestUrl = (name, region) => {
+    const query = qs.stringify({ 
+        key: constant.apiKey,
+        radius: 5000, 
+        location: `${region.latitude},${region.longitude}`, 
+        keyword: `${name}`
+    });
+    return `${PLACE_REQUEST_ROOT_URL}${query}`;
 };
 
 const getFilteredDataWithGeoLocation = async (filteredData, region) => {
