@@ -5,7 +5,8 @@ import {
     PanResponder,
     Dimensions,
     LayoutAnimation,
-    UIManager
+    UIManager,
+    Platform
 } from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -95,7 +96,7 @@ class SwipeDeck extends Component {
             return this.props.renderNoMoreCards();
         }
 
-        return this.props.data.map((item, i) => {
+        const deck = this.props.data.map((item, i) => {
             if (i < index) { return null; }
 
             if (i === index) {
@@ -118,7 +119,9 @@ class SwipeDeck extends Component {
                     {this.props.renderCard(item)}
                 </Animated.View>
             );
-        }).reverse();
+        });
+
+        return Platform.OS === 'android' ? deck : deck.reverse();
     }
 
     render() {
