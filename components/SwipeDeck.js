@@ -115,7 +115,7 @@ class SwipeDeck extends Component {
             return (
                 <Animated.View 
                     key={item[this.props.keyProp]} 
-                    style={[styles.cardStyle, { top: 10 * (i - index) }]}
+                    style={[styles.cardStyle, { top: 25 * (i - index) }]}
                 >
                     {this.props.renderCard(item)}
                 </Animated.View>

@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 import { MapView } from 'expo';
 import { Card, Button } from 'react-native-elements';
 import SwipeDeck from '../components/SwipeDeck';
-import { fetchJobs } from '../actions';
+import { 
+    fetchJobs, 
+    likeJob, 
+    dislikeJob 
+} from '../actions';
 
 class DeckScreen extends React.Component {
     renderCard(job) {
@@ -52,6 +56,8 @@ class DeckScreen extends React.Component {
                     data={this.props.jobs}
                     renderCard={this.renderCard}
                     renderNoMoreCards={this.renderNoMoreCards}
+                    onSwipeRight={job => this.props.likeJob(job)}
+                    onSwipeLeft={job => this.props.dislikeJob(job)}
                     keyProp='jobID'
                 />
             </View>
@@ -71,4 +77,8 @@ function mapStateToProps({ jobs }) {
     return { jobs: jobs.filteredJobsWithGeoLocation };
 }
 
-export default connect(mapStateToProps, { fetchJobs })(DeckScreen);
+export default connect(mapStateToProps, { 
+    fetchJobs, 
+    likeJob, 
+    dislikeJob 
+})(DeckScreen);
