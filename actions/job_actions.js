@@ -1,7 +1,11 @@
 import axios from 'axios';
 import reverseGeocode from 'latlng-to-zip';
 import qs from 'qs';
-import { FETCH_JOBS } from './types';
+import { 
+    FETCH_JOBS, 
+    LIKE_JOB,
+    DISLIKE_JOB
+} from './types';
 import { constant } from '../constants';
 import JOB_DATA from './IndeedJobData.json';
 import { Location, Permissions } from 'expo';
@@ -146,3 +150,17 @@ const getFilteredDataWithGeoLocation = async (filteredData, region) => {
     const filteredDataWithGeoLocation = { filteredJobsWithGeoLocation, filteredJobsWithGeoLocationLength };
     return filteredDataWithGeoLocation;
 };
+
+export const likeJob = (job) => {
+    return {
+        payload: job,
+        type: LIKE_JOB
+    };
+}
+
+export const dislikeJob = (job) => {
+    return {
+        payload: job,
+        type: DISLIKE_JOB
+    };
+}
