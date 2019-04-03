@@ -96,7 +96,7 @@ class SwipeDeck extends Component {
             return this.props.renderNoMoreCards();
         }
 
-        const deck = this.props.data.map((item, i) => {
+        return this.props.data.map((item, i) => {
             if (i < index) { return null; }
 
             if (i === index) {
@@ -119,9 +119,7 @@ class SwipeDeck extends Component {
                     {this.props.renderCard(item)}
                 </Animated.View>
             );
-        });
-
-        return Platform.OS === 'android' ? deck : deck.reverse();
+        }).reverse();
     }
 
     render() {
