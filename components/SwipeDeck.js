@@ -101,7 +101,7 @@ class SwipeDeck extends Component {
             if (i === index) {
                 return (
                     <Animated.View 
-                        key={item.id} 
+                        key={item.jobID} 
                         style={[this.getCardStyle(), styles.cardStyle, { zIndex: 1 }]} 
                         {...this.state.panResponder.panHandlers}
                     >
@@ -112,7 +112,7 @@ class SwipeDeck extends Component {
 
             return (
                 <Animated.View 
-                    key={item.id} 
+                    key={item.jobID} 
                     style={[styles.cardStyle, { top: 10 * (i - index) }]}
                 >
                     {this.props.renderCard(item)}

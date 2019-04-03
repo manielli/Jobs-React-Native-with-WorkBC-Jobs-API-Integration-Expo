@@ -34,7 +34,7 @@ const JOB_QUERY_PARAMS = {
     	{ id: 13 },
         { id: 14 } 
     ],
-    majorProjects: false
+    majorProjects: true
 };
 
 // const buildJobsUrl = (zip) => {
@@ -45,9 +45,10 @@ const JOB_QUERY_PARAMS = {
 const buildPlaceRequestUrl = (name, region) => {
     const query = qs.stringify({ 
         key: constant.apiKey,
-        radius: 10000, 
+        radius: 5000, 
         location: `${region.latitude},${region.longitude}`, 
-        keyword: name});
+        keyword: `${name}`
+    });
     return `${PLACE_REQUEST_ROOT_URL}${query}`;
 };
 
@@ -72,17 +73,35 @@ export const fetchJobs = (region, callback) => {
             let { data } = await axios.post(JOB_ROOT_URL, { ...JOB_QUERY_PARAMS, city: cityOfAddress, lastRequestDate: lastRequestDate });
             const filteredData = getFilteredData(data);
             const { filteredJobs } = filteredData;
-
-            filteredJobs.forEach( async (element) => {
-                const url = buildPlaceRequestUrl(element.employerName, region);
-                let { data } = await axios.get(url);
-                console.log(data.results[0]);
+            // console.log(filteredData);
+            let filteredJobsWithLocations = await filteredJobs.map( async (element) => {
+                try {
+                    const url = buildPlaceRequestUrl(element.employerName, region);
+                    let { data } = await axios.get(url);
+                    if (data.results.length === 0) {
+                        element['location'] = { 
+                            lng: -123.13505564733309, 
+                            lat: 49.28883325048375
+                        }
+                    } else {
+                        const { location } = data.results[0].geometry;
+                        element['location'] = location;
+                        
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+                return element;
             });
+
+            let result = await Promise.all(filteredJobsWithLocations);
+            console.log(result);
+            // const filteredJobsWithLocationsCount = filteredJobsWithLocations.length;
+            // const filteredDataWithLocations = { filteredJobsWithLocations };
+
+
             // const filteredDataWithLocations = getFilteredDataWithLocations(filteredData);
-
-
             dispatch({ type: FETCH_JOBS, payload: filteredData });
-            console.log(filteredData);
             callback();
             
             // let data = JOB_DATA;
@@ -107,17 +126,15 @@ const getLastRequestDate = () => {
 
 const getFilteredData = (data) => {
     const { jobs } = data;
-    const filteredJobsTemp = jobs.filter((element) => {
+    const filteredJobs = jobs.filter((element) => {
         return element.employerName !== null &&
             element.jobDescription !== null &&
             element.jobTitle !== null;
     });
-    const filteredJobsCount = filteredJobsTemp.length;
-    const filteredJobs = filteredJobsTemp.slice(0,10);
+    // const filteredJobs = filteredJobsTemp.slice(-10);
+    const filteredJobsCount = filteredJobs.length;
     return { filteredJobsCount, filteredJobs };
 };
 
 // const getFilteredDataWithLocations = (filteredData) => {
-
-
 // };
