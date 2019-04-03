@@ -21,8 +21,8 @@ class DeckScreen extends React.Component {
                     <MapView 
                         scrollEnabled={false}
                         style={{ flex: 1, marginBottom: 25 }}
-                        // cacheEnabled={Platform.OS === 'android' ? true : false}
-                        cacheEnabled
+                        cacheEnabled={Platform.OS === 'android' ? true : false}
+                        // cacheEnabled
                         initialRegion={initialRegion}
                     />
                 </View>
@@ -52,6 +52,7 @@ class DeckScreen extends React.Component {
                     data={this.props.jobs}
                     renderCard={this.renderCard}
                     renderNoMoreCards={this.renderNoMoreCards}
+                    keyProp='jobID'
                 />
             </View>
         );

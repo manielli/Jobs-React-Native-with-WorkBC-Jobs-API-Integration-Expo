@@ -16,7 +16,8 @@ const SWIPE_OUT_DURATION = 250;
 class SwipeDeck extends Component {
     static defaultProps = {
         onSwipeRight: () => {},
-        onSwipeLeft: () => {}
+        onSwipeLeft: () => {},
+        keyProp: 'id'
     }
 
     constructor(props) {
@@ -102,7 +103,7 @@ class SwipeDeck extends Component {
             if (i === index) {
                 return (
                     <Animated.View 
-                        key={item.jobID} 
+                        key={item[this.props.keyProp]} 
                         style={[this.getCardStyle(), styles.cardStyle, { zIndex: 1 }]} 
                         {...this.state.panResponder.panHandlers}
                     >
@@ -113,7 +114,7 @@ class SwipeDeck extends Component {
 
             return (
                 <Animated.View 
-                    key={item.jobID} 
+                    key={item[this.props.keyProp]} 
                     style={[styles.cardStyle, { top: 10 * (i - index) }]}
                 >
                     {this.props.renderCard(item)}
