@@ -73,7 +73,7 @@ export const fetchJobs = (region, callback) => {
             let { data } = await axios.post(JOB_ROOT_URL, { ...JOB_QUERY_PARAMS, city: cityOfAddress, lastRequestDate: lastRequestDate });
             const filteredData = getFilteredData(data);
             const { filteredJobs } = filteredData;
-            // console.log(filteredData);
+            
             let filteredJobsWithLocations = await filteredJobs.map( async (element) => {
                 try {
                     const url = buildPlaceRequestUrl(element.employerName, region);
@@ -94,14 +94,10 @@ export const fetchJobs = (region, callback) => {
                 return element;
             });
 
-            let result = await Promise.all(filteredJobsWithLocations);
-            console.log(result);
-            // const filteredJobsWithLocationsCount = filteredJobsWithLocations.length;
-            // const filteredDataWithLocations = { filteredJobsWithLocations };
-
-
-            // const filteredDataWithLocations = getFilteredDataWithLocations(filteredData);
-            dispatch({ type: FETCH_JOBS, payload: filteredData });
+            let filteredJobsWithGeoLocation = await Promise.all(filteredJobsWithLocations);
+            const filteredJobsWithGeoLocationLength = filteredJobsWithGeoLocation.length;
+            const filteredDataWithGeoLocation = { filteredJobsWithGeoLocation, filteredJobsWithGeoLocationLength }
+            dispatch({ type: FETCH_JOBS, payload: filteredDataWithGeoLocation });
             callback();
             
             // let data = JOB_DATA;

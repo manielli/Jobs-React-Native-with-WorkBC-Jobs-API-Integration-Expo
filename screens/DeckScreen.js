@@ -9,10 +9,10 @@ import { fetchJobs } from '../actions';
 class DeckScreen extends React.Component {
     renderCard(job) {
         const initialRegion = {
-            longitude: -123.13505564733309,
-            latitude: 49.28883325048375,
-            latitudeDelta: 0.045,
-            longitudeDelta: 0.02
+            longitude: job.location.lng,
+            latitude: job.location.lat,
+            latitudeDelta: 0.02,
+            longitudeDelta: 0.0175
         };
 
         return (
@@ -67,7 +67,7 @@ const styles = {
 };
 
 function mapStateToProps({ jobs }) {
-    return { jobs: jobs.filteredJobs };
+    return { jobs: jobs.filteredJobsWithGeoLocation };
 }
 
 export default connect(mapStateToProps, { fetchJobs })(DeckScreen);
