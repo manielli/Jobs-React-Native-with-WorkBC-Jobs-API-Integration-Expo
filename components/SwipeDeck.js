@@ -125,7 +125,7 @@ class SwipeDeck extends Component {
 
     render() {
         return (
-            <View style={{ top: 50 }} >
+            <View>
                 {this.renderCards()}
             </View>
         );

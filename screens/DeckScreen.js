@@ -16,7 +16,7 @@ class DeckScreen extends React.Component {
         };
 
         return (
-           <Card title={job.jobTitle} >
+           <Card title={job.jobTitle} titleStyle={{ height: 50 }} >
                 <View style={{ height: 300 }} >
                     <MapView 
                         scrollEnabled={false}
@@ -30,7 +30,7 @@ class DeckScreen extends React.Component {
                     <Text>{job.employerName}</Text>
                     <Text>{job.postedDate.split('T')[0]}</Text>
                 </View>
-                <Text>{job.jobDescription.replace(/<b>/g, '').replace(/<\/b>/g, '')}</Text>
+                <Text style={{ height: 100 }} >{job.jobDescription.replace(/<b>/g, '').replace(/<\/b>/g, '')}</Text>
            </Card>             
         );
     }
@@ -47,7 +47,7 @@ class DeckScreen extends React.Component {
 
     render() {
         return (
-            <View>
+            <View style={{ top: 50 }} >
                 <SwipeDeck 
                     data={this.props.jobs}
                     renderCard={this.renderCard}
