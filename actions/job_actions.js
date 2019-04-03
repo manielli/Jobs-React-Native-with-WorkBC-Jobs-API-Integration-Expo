@@ -110,26 +110,26 @@ const getFilteredData = (data) => {
 //     return `${JOB_ROOT_URL}${query}`;
 // };
 
-const buildPlaceRequestUrl = (name, region) => {
+const buildPlaceRequestUrl = (emplyerName, region) => {
     const query = qs.stringify({ 
         key: constant.apiKey,
         radius: 5000, 
         location: `${region.latitude},${region.longitude}`, 
-        keyword: `${name}`
+        keyword: `${emplyerName}`
     });
     return `${PLACE_REQUEST_ROOT_URL}${query}`;
 };
 
 const getFilteredDataWithGeoLocation = async (filteredData, region) => {
     const { filteredJobs } = filteredData;
-    let filteredJobsWithLocations = await filteredJobs.map( async (element) => {
+    let filteredJobsWithLocation = await filteredJobs.map( async (element) => {
         try {
             const url = buildPlaceRequestUrl(element.employerName, region);
             let { data } = await axios.get(url);
             if (data.results.length === 0) {
                 element['location'] = { 
-                    lng: -123.13505564733309, 
-                    lat: 49.28883325048375
+                    lat: 49.28883325048375,
+                    lng: -123.13505564733309 
                 }
             } else {
                 const { location } = data.results[0].geometry;
@@ -141,7 +141,7 @@ const getFilteredDataWithGeoLocation = async (filteredData, region) => {
         return element;
     });
 
-    let filteredJobsWithGeoLocation = await Promise.all(filteredJobsWithLocations);
+    let filteredJobsWithGeoLocation = await Promise.all(filteredJobsWithLocation);
     const filteredJobsWithGeoLocationLength = filteredJobsWithGeoLocation.length;
     const filteredDataWithGeoLocation = { filteredJobsWithGeoLocation, filteredJobsWithGeoLocationLength };
     return filteredDataWithGeoLocation;
