@@ -1,6 +1,7 @@
 import React from 'react';
 import { 
     Linking, 
+    MapView,
     Platform, 
     ScrollView, 
     Text, 
@@ -30,10 +31,29 @@ class ReviewScreen extends React.Component {
 
     renderLikedJobs() {
         return this.props.likedJobs.map(job => {
-            const { employerName, postedDate, url } = job;
+            const { 
+                employerName, 
+                postedDate, 
+                url, 
+                location 
+            } = job;
+
+            const initialRegion = {
+                latitude: location.lat,
+                latitudeDelta: 0.01,
+                longitude: location.lng,
+                longitudeDelta: 0.01
+            };
+
             return (
                 <Card>
                     <View style={{ height: 200 }} >
+                        <MapView 
+                            style={{ flex: 1 }}
+                            cacheEnabled={Platform.OS === 'android'}
+                            scrollEnabled={false}
+                            initialRegion={initialRegion}
+                        />
                         <View style={styles.detailWrapper} >
                             <Text style={styles.italics} >{employerName}</Text>
                             <Text style={styles.italics} >{postedDate.split('T')[0]}</Text>
