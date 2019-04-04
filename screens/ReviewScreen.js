@@ -20,7 +20,10 @@ class ReviewScreen extends React.Component {
                     title="Settings" 
                     onPress={() => navigation.navigate('settings')} 
                     type="clear"
-                    titleStyle={{ color: 'rgba(0, 122, 255, 1)' }}
+                    titleStyle={{ 
+                        color: 'rgba(0, 122, 255, 1)', 
+                        marginRight: 10 
+                    }}
                 />
             ),
             headerStyle: {
