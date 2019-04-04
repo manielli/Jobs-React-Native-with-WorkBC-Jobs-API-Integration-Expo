@@ -6,6 +6,5 @@ import likedJobs from './likes_reducer';
 export default combineReducers({
     auth,
     jobs,
-    likedJobs,
-    clearLikedJobs
+    likedJobs
 });

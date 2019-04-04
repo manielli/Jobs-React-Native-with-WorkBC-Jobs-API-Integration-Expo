@@ -167,5 +167,5 @@ export const dislikeJob = (job) => {
 }
 
 export const clearLikedJobs = () => {
-    return { type: CLEAR_LIKED_JOBs}
-}
+    return { type: CLEAR_LIKED_JOBs }
+};
