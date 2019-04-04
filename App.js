@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { Icon } from 'react-native-elements';
 import { 
   createAppContainer, 
   createBottomTabNavigator, 
@@ -27,7 +28,17 @@ const MainNavigator = createBottomTabNavigator({
         screen: createStackNavigator({
           review: { screen: ReviewScreen },
           settings: { screen: SettingsScreen }
-        })
+        }),
+        navigationOptions: {
+          tabBarLabel: 'Review',
+          tabBarIcon: ({ tintColor }) => {
+            return <Icon name='favorite' size={30} color={tintColor} />;
+          }
+        }
+      }
+    }, {
+      tabBarOptions: {
+        labelStyle: { fontSize: 12 }
       }
     })
   }  
