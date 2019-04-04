@@ -159,13 +159,6 @@ export const likeJob = (job) => {
     };
 }
 
-export const dislikeJob = (job) => {
-    return {
-        payload: job,
-        type: DISLIKE_JOB
-    };
-}
-
 export const clearLikedJobs = () => {
     return { type: CLEAR_LIKED_JOBs }
 };
