@@ -39,7 +39,7 @@ class DeckScreen extends React.Component {
         );
     }
 
-    renderNoMoreCards() {
+    renderNoMoreCards = () => {
         return (
             <Card title='No More Cards' >
                 <Button 
