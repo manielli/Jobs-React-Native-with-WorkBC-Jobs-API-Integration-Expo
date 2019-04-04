@@ -57,7 +57,6 @@ class DeckScreen extends React.Component {
                     renderCard={this.renderCard}
                     renderNoMoreCards={this.renderNoMoreCards}
                     onSwipeRight={job => this.props.likeJob(job)}
-                    onSwipeLeft={job => this.props.dislikeJob(job)}
                     keyProp='jobID'
                 />
             </View>
