@@ -4,7 +4,7 @@ import qs from 'qs';
 import { 
     FETCH_JOBS, 
     LIKE_JOB,
-    CLEAR_LIKED_JOBs
+    CLEAR_LIKED_JOBS
 } from './types';
 import { constant } from '../constants';
 import JOB_DATA from './IndeedJobData.json';
@@ -160,5 +160,5 @@ export const likeJob = (job) => {
 }
 
 export const clearLikedJobs = () => {
-    return { type: CLEAR_LIKED_JOBs }
+    return { type: CLEAR_LIKED_JOBS }
 };
