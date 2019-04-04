@@ -293,3 +293,5 @@ buck-out/
 .fakebuckversion
 
 # End of https://www.gitignore.io/api/macos,linux,firebase,reactnative
+
+constants.js
