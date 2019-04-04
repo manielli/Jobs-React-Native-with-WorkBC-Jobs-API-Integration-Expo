@@ -68,6 +68,7 @@ export const fetchJobs = (region, callback) => {
                 lastRequestDate: lastRequestDate 
             });
             const filteredData = getFilteredData(data);
+            console.log(filteredData);
             const jobsData = await getFilteredDataWithGeoLocation(filteredData, region);
             dispatch({ type: FETCH_JOBS, payload: jobsData });
             callback();

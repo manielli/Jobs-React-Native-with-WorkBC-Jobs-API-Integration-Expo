@@ -1,5 +1,6 @@
 import React from 'react';
 import { 
+    Linking, 
     Platform, 
     ScrollView, 
     Text, 
@@ -29,13 +30,19 @@ class ReviewScreen extends React.Component {
 
     renderLikedJobs() {
         return this.props.likedJobs.map(job => {
+            const { employerName, postedDate, url } = job;
             return (
                 <Card>
                     <View style={{ height: 200 }} >
                         <View style={styles.detailWrapper} >
-                            <Text style={styles.italics} >{job.employerName}</Text>
-                            <Text style={styles.italics} >{job.postedDate.split('T')[0]}</Text>
+                            <Text style={styles.italics} >{employerName}</Text>
+                            <Text style={styles.italics} >{postedDate.split('T')[0]}</Text>
                         </View>
+                        <Button 
+                            title='Apply Now' 
+                            backgroundColor='#03A9F4' 
+                            onPress={() => Linking.openURL(url)}
+                        />
                     </View>
                 </Card>
             );
