@@ -40,4 +40,4 @@ function mapStateToProps(state) {
     return { likedJobs: state.likedJobs };
 }
 
-export default connect(mapStateToProps, { actions })(ReviewScreen);
+export default connect(mapStateToProps, actions)(ReviewScreen);
