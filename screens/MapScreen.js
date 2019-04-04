@@ -8,12 +8,12 @@ import * as actions from '../actions';
 
 class MapScreen extends React.Component {
     static navigationOptions = () => {
-        return ({
+        return {
             title: 'Map',
             tabBarIcon: ({ tintColor }) => {    
                 return <Icon name='my-location' size={30} color={tintColor} />;
             }
-        });
+        };
     }
     
     state = { 

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { MapView } from 'expo';
-import { Card, Button } from 'react-native-elements';
+import { Card, Button, Icon } from 'react-native-elements';
 import SwipeDeck from '../components/SwipeDeck';
 import { 
     fetchJobs, 
@@ -11,6 +11,15 @@ import {
 } from '../actions';
 
 class DeckScreen extends React.Component {
+    static navigationOptions = () => {
+        return {
+            title: 'Deck',
+            tabBarIcon: ({ tintColor }) => {    
+                return <Icon name='description' size={30} color={tintColor} />;
+            }
+        };
+    }
+
     renderCard(job) {
         const initialRegion = {
             longitude: job.location.lng,
