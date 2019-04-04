@@ -4,7 +4,7 @@ import qs from 'qs';
 import { 
     FETCH_JOBS, 
     LIKE_JOB,
-    DISLIKE_JOB
+    CLEAR_LIKED_JOBs
 } from './types';
 import { constant } from '../constants';
 import JOB_DATA from './IndeedJobData.json';
@@ -164,4 +164,8 @@ export const dislikeJob = (job) => {
         payload: job,
         type: DISLIKE_JOB
     };
+}
+
+export const clearLikedJobs = () => {
+    return { type: CLEAR_LIKED_JOBs}
 }

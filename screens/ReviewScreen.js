@@ -37,7 +37,8 @@ class ReviewScreen extends React.Component {
                 url, 
                 location,
                 jobDescription,
-                jobTitle 
+                jobTitle,
+                jobID 
             } = job;
 
             const initialRegion = {
@@ -48,10 +49,10 @@ class ReviewScreen extends React.Component {
             };
 
             return (
-                <Card title={jobTitle} titleStyle={{ height: 50 }} >
-                    <View style={{ height: 400 }} >
+                <Card key={jobID} title={jobTitle} titleStyle={{ height: 50 }} >
+                    <View style={{ height: 500 }} >
                         <MapView 
-                            style={{ flex: 1, marginBottom: 25 }}
+                            style={{ flex: 1 }}
                             cacheEnabled={Platform.OS === 'android' ? true : false }
                             scrollEnabled={false}
                             initialRegion={initialRegion}
@@ -84,6 +85,7 @@ class ReviewScreen extends React.Component {
 const styles = {
     detailWrapper: {
         marginBottom: 10,
+        marginTop: 10,
         flexDirection: 'row',
         justifyContent: 'space-around'
     },
