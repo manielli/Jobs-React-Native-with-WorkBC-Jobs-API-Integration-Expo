@@ -1,12 +1,12 @@
 import React from 'react';
 import { 
     Linking, 
-    MapView,
     Platform, 
     ScrollView, 
     Text, 
     View 
 } from 'react-native';
+import { MapView } from 'expo';
 import { Button, Card } from 'react-native-elements';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
@@ -35,7 +35,9 @@ class ReviewScreen extends React.Component {
                 employerName, 
                 postedDate, 
                 url, 
-                location 
+                location,
+                jobDescription,
+                jobTitle 
             } = job;
 
             const initialRegion = {
@@ -46,11 +48,11 @@ class ReviewScreen extends React.Component {
             };
 
             return (
-                <Card>
-                    <View style={{ height: 200 }} >
+                <Card title={jobTitle} titleStyle={{ height: 50 }} >
+                    <View style={{ height: 400 }} >
                         <MapView 
-                            style={{ flex: 1 }}
-                            cacheEnabled={Platform.OS === 'android'}
+                            style={{ flex: 1, marginBottom: 25 }}
+                            cacheEnabled={Platform.OS === 'android' ? true : false }
                             scrollEnabled={false}
                             initialRegion={initialRegion}
                         />
@@ -58,6 +60,7 @@ class ReviewScreen extends React.Component {
                             <Text style={styles.italics} >{employerName}</Text>
                             <Text style={styles.italics} >{postedDate.split('T')[0]}</Text>
                         </View>
+                        <Text style={{ height: 100 }} >{jobDescription.replace(/<b>/g, '').replace(/<\/b>/g, '')}</Text>
                         <Button 
                             title='Apply Now' 
                             backgroundColor='#03A9F4' 
