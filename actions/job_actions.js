@@ -40,7 +40,7 @@ const JOB_QUERY_PARAMS = {
     	{ id: 13 },
         { id: 14 } 
     ],
-    majorProjects: false
+    majorProjects: true
 };
 
 export const fetchJobs = (region, callback) => {
