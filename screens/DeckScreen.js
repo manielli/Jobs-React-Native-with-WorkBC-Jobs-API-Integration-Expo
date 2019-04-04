@@ -41,10 +41,14 @@ class DeckScreen extends React.Component {
 
     renderNoMoreCards() {
         return (
-            <Card>
-                <View title='No More Cards'>
-                    <Text style={{ alignSelf: 'center' }} >No More Cards</Text>
-                </View>
+            <Card title='No More Cards' >
+                <Button 
+                    title='Back To Map'
+                    large
+                    icon={{ name: 'my-location' }}
+                    backgroundColor='#03A9F4'
+                    onPress={() => this.props.navigation.navigate('map')}
+                />
             </Card>
         );
     }
