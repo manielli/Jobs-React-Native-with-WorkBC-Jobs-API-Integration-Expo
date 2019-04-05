@@ -154,11 +154,13 @@ const getFilteredDataWithGeoLocation = async (filteredData, region) => {
 
 export const likeJob = (job) => {
     return {
-        payload: job,
-        type: LIKE_JOB
+        type: LIKE_JOB,
+        payload: job
     };
 }
 
 export const clearLikedJobs = () => {
-    return { type: CLEAR_LIKED_JOBS }
+    return { 
+        type: CLEAR_LIKED_JOBS 
+    };
 };
