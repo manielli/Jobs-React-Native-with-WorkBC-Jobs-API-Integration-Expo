@@ -9,7 +9,7 @@ import {
 
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import configurationStore from './store';
+import configureStore from './store';
 
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
@@ -55,7 +55,7 @@ const MainNavigator = createBottomTabNavigator({
 
 const AppContainer = createAppContainer(MainNavigator);
 
-const { store, persistor } = configurationStore();
+const { store, persistor } = configureStore();
 
 export default class App extends React.Component {
   render() {

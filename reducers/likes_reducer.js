@@ -8,8 +8,8 @@ import {
 export default function (state = [], action) {
     switch (action.type) {
         case REHYDRATE: {
-            const { likedJobs } = action.payload;
-            return likedJobs && likedJobs.length ? likedJobs : [];
+            return action.payload && action.payload.likedJobs ? 
+                action.payload.likedJobs : state;
         }
         case CLEAR_LIKED_JOBS: 
             return [];
