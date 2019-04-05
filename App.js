@@ -10,6 +10,7 @@ import {
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import configureStore from './store';
+import registerForNotifications from './services/push_notifications';
 
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
@@ -58,6 +59,10 @@ const AppContainer = createAppContainer(MainNavigator);
 const { store, persistor } = configureStore();
 
 export default class App extends React.Component {
+  componentDidMount() {
+    registerForNotifications();
+  }
+
   render() {
     return (
       <Provider store={store} >
