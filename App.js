@@ -9,7 +9,7 @@ import {
 
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import createStore from './store';
+import configurationStore from './store';
 
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
@@ -53,8 +53,9 @@ const MainNavigator = createBottomTabNavigator({
 // In newer react navigation lazy is set to true by default
 // so we don't need to use it
 
-const { store, persistor } = createStore();
 const AppContainer = createAppContainer(MainNavigator);
+
+const { store, persistor } = configurationStore();
 
 export default class App extends React.Component {
   render() {

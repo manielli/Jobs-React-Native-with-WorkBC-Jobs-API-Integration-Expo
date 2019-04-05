@@ -19,18 +19,15 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
-// export const store = createStore(
-//     persistedReducer,
-//     {},
-//     compose(
-//         applyMiddleware(thunk)
-//     )
-// );
-
-// export const persistor = persistStore(store);
-
 export default () => {
-    let store = createStore(persistedReducer, {}, compose(applyMiddleware(thunk)));
+    let store = createStore(
+        persistedReducer, 
+        {}, 
+        compose(
+            applyMiddleware(thunk)
+        )
+    );
     let persistor = persistStore(store);
+    
     return { store, persistor };
 };
