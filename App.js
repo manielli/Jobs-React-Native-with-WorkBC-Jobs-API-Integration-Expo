@@ -8,7 +8,8 @@ import {
 } from 'react-navigation';
 
 import { Provider } from 'react-redux';
-import store from './store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store';
 
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
@@ -16,6 +17,7 @@ import MapScreen from './screens/MapScreen';
 import DeckScreen from './screens/DeckScreen';
 import ReviewScreen from './screens/ReviewScreen';
 import SettingsScreen from './screens/SettingsScreen';
+
 
 const MainNavigator = createBottomTabNavigator({
   welcome: { screen: WelcomeScreen },
@@ -57,7 +59,9 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store} >
-        <AppContainer />
+        <PersistGate loading={null} persistor={persistor} >
+          <AppContainer />
+        </PersistGate>
       </Provider>
     );
   }
