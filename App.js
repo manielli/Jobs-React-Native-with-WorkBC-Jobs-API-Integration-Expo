@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { 
   createAppContainer, 
@@ -9,6 +9,7 @@ import {
 
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import { Notifications } from 'expo';
 import configureStore from './store';
 import registerForNotifications from './services/push_notifications';
 
@@ -61,6 +62,17 @@ const { store, persistor } = configureStore();
 export default class App extends React.Component {
   componentDidMount() {
     registerForNotifications();
+    Notifications.addListener((notification) => {
+      const { data: { text }, origin } = notification;
+
+      if (origin === 'received' && text) {
+        Alert.alert(
+          'New Push Notification',
+          text,
+          [{ text: 'Ok.' }]
+        );
+      }
+    });
   }
 
   render() {
