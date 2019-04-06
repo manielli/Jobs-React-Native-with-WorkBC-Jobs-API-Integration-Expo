@@ -62,6 +62,21 @@ const { store, persistor } = configureStore();
 export default class App extends React.Component {
   componentDidMount() {
     registerForNotifications();
+
+    // https://expo.io/dashboard/notifications
+    // At the link above in the Expo Push Token
+    // we enter token value
+    // And at the JSON Data field we enter the following
+    // JSON object:
+    // { 
+    //   "to": "token value", 
+    //   "sound": "default", 
+    //   "text": "Hello world!" 
+    // }
+    // Also in iOS Section for Message Subtitle you can 
+    // put Message Subtitle, and for Message Category
+    // you can put Message Category and give badge count 1
+
     Notifications.addListener((notification) => {
       const { data: { text }, origin } = notification;
 
@@ -69,7 +84,11 @@ export default class App extends React.Component {
         Alert.alert(
           'New Push Notification',
           text,
-          [{ text: 'Ok.' }]
+          [
+            { text: 'Okay', style: 'cancel' }, 
+            { text: 'Cancel', style: 'destructive' },
+            { text: 'Ask Me Later!'}
+          ]
         );
       }
     });
