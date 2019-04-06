@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { 
   createAppContainer, 
@@ -8,7 +8,10 @@ import {
 } from 'react-navigation';
 
 import { Provider } from 'react-redux';
-import store from './store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Notifications } from 'expo';
+import configureStore from './store';
+import registerForNotifications from './services/push_notifications';
 
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
@@ -16,6 +19,7 @@ import MapScreen from './screens/MapScreen';
 import DeckScreen from './screens/DeckScreen';
 import ReviewScreen from './screens/ReviewScreen';
 import SettingsScreen from './screens/SettingsScreen';
+
 
 const MainNavigator = createBottomTabNavigator({
   welcome: { screen: WelcomeScreen },
@@ -53,11 +57,49 @@ const MainNavigator = createBottomTabNavigator({
 
 const AppContainer = createAppContainer(MainNavigator);
 
+const { store, persistor } = configureStore();
+
 export default class App extends React.Component {
+  componentDidMount() {
+    registerForNotifications();
+
+    // https://expo.io/dashboard/notifications
+    // At the link above in the Expo Push Token
+    // we enter token value
+    // And at the JSON Data field we enter the following
+    // JSON object:
+    // { 
+    //   "to": "token value", 
+    //   "sound": "default", 
+    //   "text": "Hello world!" 
+    // }
+    // Also in iOS Section for Message Subtitle you can 
+    // put Message Subtitle, and for Message Category
+    // you can put Message Category and give badge count 1
+
+    Notifications.addListener((notification) => {
+      const { data: { text }, origin } = notification;
+
+      if (origin === 'received' && text) {
+        Alert.alert(
+          'New Push Notification',
+          text,
+          [
+            { text: 'Okay', style: 'cancel' }, 
+            { text: 'Cancel', style: 'destructive' },
+            { text: 'Ask Me Later!'}
+          ]
+        );
+      }
+    });
+  }
+
   render() {
     return (
       <Provider store={store} >
-        <AppContainer />
+        <PersistGate loading={null} persistor={persistor} >
+          <AppContainer />
+        </PersistGate>
       </Provider>
     );
   }

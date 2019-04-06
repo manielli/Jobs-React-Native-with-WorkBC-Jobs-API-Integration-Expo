@@ -1,7 +1,8 @@
 import { FETCH_JOBS } from '../actions/types';
 
-const INITIAL_STATE = { 
-    jobs: []
+const INITIAL_STATE = {  
+    filteredJobsWithGeoLocation: [], 
+    filteredJobsWithGeoLocationLength: 0 
 };
 
 export default function (state = INITIAL_STATE, action) {

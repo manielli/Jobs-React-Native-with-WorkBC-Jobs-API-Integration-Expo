@@ -4,14 +4,29 @@ import {
     applyMiddleware
 } from 'redux';
 import thunk from 'redux-thunk';
+import { 
+    persistStore, 
+    persistReducer
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import reducers from '../reducers';
 
-const store = createStore(
-    reducers,
-    {},
-    compose(
-        applyMiddleware(thunk)
-    )
-);
+const persistConfig = {
+    key: 'root',
+    storage,
+    whitelist: ['likedJobs']
+};
 
-export default store;
+const persistedReducer = persistReducer(persistConfig, reducers);
+
+export default () => {
+    let store = createStore(
+        persistedReducer, 
+        {}, 
+        compose(
+            applyMiddleware(thunk)
+        )
+    );
+    let persistor = persistStore(store);
+    return { store, persistor };
+};
