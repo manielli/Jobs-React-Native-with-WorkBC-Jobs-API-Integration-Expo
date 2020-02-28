@@ -20,6 +20,7 @@ import DeckScreen from './screens/DeckScreen';
 import ReviewScreen from './screens/ReviewScreen';
 import SettingsScreen from './screens/SettingsScreen';
 
+import * as Facebook from 'expo-facebook';
 
 const MainNavigator = createBottomTabNavigator({
   welcome: { screen: WelcomeScreen },
@@ -61,6 +62,7 @@ const { store, persistor } = configureStore();
 
 export default class App extends React.Component {
   componentDidMount() {
+    Facebook.initializeAsync('2422058358062134', 'jobapp')
     registerForNotifications();
 
     // https://expo.io/dashboard/notifications

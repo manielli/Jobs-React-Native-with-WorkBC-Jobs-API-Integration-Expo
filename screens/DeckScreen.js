@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Platform } from 'react-native';
 import { connect } from 'react-redux';
-import { MapView } from 'expo';
+import MapView from 'react-native-maps';
 import { Card, Button, Icon } from 'react-native-elements';
 import SwipeDeck from '../components/SwipeDeck';
 import { 

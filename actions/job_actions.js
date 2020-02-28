@@ -8,7 +8,8 @@ import {
 } from './types';
 import { constant } from '../constants';
 import JOB_DATA from './IndeedJobData.json';
-import { Location, Permissions } from 'expo';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
 import moment from 'moment';
 
 // The no-longer-available indeed.com jobs api root URL

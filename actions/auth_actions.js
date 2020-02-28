@@ -3,7 +3,7 @@ import {
     FACEBOOK_LOGIN_FAIL 
 } from './types';
 import { AsyncStorage } from 'react-native';
-import { Facebook } from 'expo';
+import * as Facebook from 'expo-facebook';
 
 // How to use AsyncStorage
 // AsyncStorage.setItem('fb_token', token);

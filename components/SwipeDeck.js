@@ -43,13 +43,13 @@ class SwipeDeck extends Component {
         this.state = { panResponder, position, index: 0 };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps !== this.props.data) {
             this.setState({ index: 0 });
         }
     }
 
-    componentWillUpdate() {
+    UNSAFE_componentWillUpdate() {
         UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
         LayoutAnimation.spring()
     }

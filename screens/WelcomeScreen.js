@@ -13,7 +13,7 @@ const SLIDE_DATA = [
 export default class WelcomeScreen extends React.Component {
     state = { token: null }
 
-    async componentWillMount() {
+    async UNSAFE_componentWillMount() {
         let token = await AsyncStorage.getItem('fb_token');
 
         // this.setState({ token });
