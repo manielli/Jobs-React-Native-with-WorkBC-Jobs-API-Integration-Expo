@@ -16,7 +16,7 @@ class AuthScreen extends React.Component {
         // In some cases it may be needed.
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         this.onAuthComplete(nextProps);
     }
 

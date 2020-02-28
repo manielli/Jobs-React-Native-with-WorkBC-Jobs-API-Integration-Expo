@@ -6,7 +6,7 @@ import {
     Text, 
     View 
 } from 'react-native';
-import { MapView } from 'expo';
+import MapView from 'react-native-maps';
 import { Button, Card } from 'react-native-elements';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
