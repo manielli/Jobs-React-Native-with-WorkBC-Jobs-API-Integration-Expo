@@ -57,7 +57,7 @@ export const fetchJobs = (region, callback) => {
 
             let { status } = await Permissions.askAsync(Permissions.LOCATION);
             if (status === 'granted') {
-                Location.setApiKey(`${constant.apiKey}`);
+                Location.setGoogleApiKey(`${constant.apiKey}`);
             }
             const lastRequestDate = getLastRequestDate();
             const { latitude, longitude } = region;
