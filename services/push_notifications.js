@@ -1,6 +1,6 @@
 import * as Notifications from 'expo-permissions';
 import * as Permissions from 'expo-permissions';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import axios from 'axios';
 
 // const PUSH_ENDPOINT = 'http://rallycoding.herokuapp.com/api/tokens'; 

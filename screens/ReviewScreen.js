@@ -15,7 +15,7 @@ class ReviewScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return { 
             title: 'Review Jobs',
-            headerRight: (
+            headerRight: () => 
                 <Button 
                     title="Settings" 
                     onPress={() => navigation.navigate('settings')} 
@@ -24,11 +24,10 @@ class ReviewScreen extends React.Component {
                         color: 'rgba(0, 122, 255, 1)', 
                         marginRight: 10 
                     }}
-                />
-            ),
-            headerStyle: {
-                marginTop: Platform.OS === 'android' ? 10 : 0
-            }
+                />,
+            // headerStyle: {
+            //     marginTop: Platform.OS === 'android' ? 10 : 0
+            // }
         };
     }
 
