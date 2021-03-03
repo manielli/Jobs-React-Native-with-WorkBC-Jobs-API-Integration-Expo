@@ -79,7 +79,8 @@ class SwipeDeck extends Component {
 
     resetPosition() {
         Animated.spring(this.state.position, {
-            toValue: { x: 0, y: 0 }
+            toValue: { x: 0, y: 0 },
+            useNativeDriver: false
         }).start();
     }
     
@@ -87,7 +88,8 @@ class SwipeDeck extends Component {
         const x = direction === 'right' ? SCREEN_WIDTH : -SCREEN_WIDTH;
         Animated.timing(this.state.position, {
             toValue: { x, y: 0 },
-            duration: SWIPE_OUT_DURATION
+            duration: SWIPE_OUT_DURATION,
+            useNativeDriver: false
         }).start(() => this.onSwipeComplete(direction));
     }
     renderCards() {

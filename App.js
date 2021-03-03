@@ -1,11 +1,9 @@
 import React from 'react';
 import { StyleSheet, Alert } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { 
-  createAppContainer, 
-  createBottomTabNavigator, 
-  createStackNavigator 
-} from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
