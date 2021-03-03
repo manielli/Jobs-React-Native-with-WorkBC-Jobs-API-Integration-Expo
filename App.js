@@ -9,7 +9,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { Notifications } from 'expo';
+import * as Notifications from 'expo-notifications';
 import configureStore from './store';
 import registerForNotifications from './services/push_notifications';
 
@@ -21,9 +21,6 @@ import ReviewScreen from './screens/ReviewScreen';
 import SettingsScreen from './screens/SettingsScreen';
 
 import * as Facebook from 'expo-facebook';
-
-// import  Constants from 'expo-constants';
-// import * as Notifications from 'expo-notifications';
 
 const MainNavigator = createBottomTabNavigator({
   welcome: { screen: WelcomeScreen },
@@ -65,7 +62,7 @@ const { store, persistor } = configureStore();
 
 export default class App extends React.Component {
   componentDidMount() {
-    Facebook.initializeAsync({appId: '2422058358062134', appName: 'jobapp'})
+    Facebook.initializeAsync({ appId: '2422058358062134', appName: 'jobapp' })
     registerForNotifications();
 
     // https://expo.io/dashboard/notifications
@@ -82,10 +79,10 @@ export default class App extends React.Component {
     // put Message Subtitle, and for Message Category
     // you can put Message Category and give badge count 1
 
-    Notifications.addListener((notification) => {
-      const { data: { text }, origin } = notification;
+    Notifications.addNotificationReceivedListener((notification) => {
+      const { request: { content: { data: { text } } } } = notification;
 
-      if (origin === 'received' && text) {
+      if (text) {
         Alert.alert(
           'New Push Notification',
           text,
@@ -152,14 +149,34 @@ const styles = StyleSheet.create({
 //     }
 //   }, [])
 
-//   return (
-//     <Provider store={store} >
-//       <PersistGate loading={null} persistor={persistor} >
-//         <AppContainer />
-//       </PersistGate>
-//     </Provider>
-
-//   );
+  // return (
+  //   <View
+  //     style={{
+  //       flex: 1,
+  //       alignItems: 'center',
+  //       justifyContent: 'space-around',
+  //     }}>
+  //     <Text>Your expo push token: {expoPushToken}</Text>
+  //     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+  //       <Text>Title: {notification && notification.request.content.title} </Text>
+  //       <Text>Body: {notification && notification.request.content.body}</Text>
+  //       <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
+  //     </View>
+  //     <Button
+  //       title="Press to schedule a notification"
+  //       onPress={async () => {
+  //         await schedulePushNotification();
+  //       }}
+  //     />
+  //   </View>
+  // );
+  //   return (
+  //   <Provider store={store} >
+  //     <PersistGate loading={null} persistor={persistor} >
+  //       <AppContainer />
+  //     </PersistGate>
+  //   </Provider>
+  // );
 // }
 
 // async function registerForPushNotificationsAsync() {
@@ -179,7 +196,6 @@ const styles = StyleSheet.create({
 //       return;
 //     }
 //     token = (await Notifications.getExpoPushTokenAsync().data);
-//     console.log(token);
 //   } else {
 //     alert('Must use physical device for Push Notifications!');
 //   }

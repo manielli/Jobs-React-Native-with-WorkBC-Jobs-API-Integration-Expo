@@ -8,7 +8,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default async () => {
     let previousToken = await AsyncStorage.getItem('pushToken');
-    // console.log(previousToken);
     
     if (previousToken) {
         return;
@@ -20,7 +19,9 @@ export default async () => {
     let finalStatus = existingStatus;
 
     if (existingStatus !== 'granted') {
-        let { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        let { status } = await Permissions.askAsync(
+            Permissions.NOTIFICATIONS
+        );
         finalStatus = status;
     }
 
@@ -28,7 +29,7 @@ export default async () => {
         return;
     }
 
-    let token = await Notifications.getExpoPushTokenAsync();
+    let { data: token } = await Notifications.getExpoPushTokenAsync();
     // await axios.post(PUSH_ENDPOINT, { token: { token } }); 
     // Line above not working anymore with rallycoding backend
     AsyncStorage.setItem('pushToken', token);
