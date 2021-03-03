@@ -60,7 +60,7 @@ const { store, persistor } = configureStore();
 
 export default class App extends React.Component {
   componentDidMount() {
-    Facebook.initializeAsync('2422058358062134', 'jobapp')
+    Facebook.initializeAsync({appId: '2422058358062134', appName: 'jobapp'})
     registerForNotifications();
 
     // https://expo.io/dashboard/notifications
