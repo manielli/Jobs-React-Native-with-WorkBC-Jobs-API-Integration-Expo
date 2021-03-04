@@ -26,7 +26,8 @@
       "bundleIdentifier": "com.manijafari.jobsexpo"
     },
     "android": {
-      "package": "com.manijafari.jobsexpo"
+      "package": "com.manijafari.jobsexpo",
+      "useNextNotificationsApi": true
     }
   }
 }

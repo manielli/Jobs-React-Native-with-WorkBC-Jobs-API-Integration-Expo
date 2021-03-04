@@ -1,4 +1,6 @@
 import React from 'react';
+// import { useState, useEffect, useRef } from 'react';
+// import { Platform } from 'react-native';
 import { StyleSheet, Alert } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { createAppContainer } from 'react-navigation';
@@ -7,7 +9,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { Notifications } from 'expo';
+import * as Notifications from 'expo-notifications';
 import configureStore from './store';
 import registerForNotifications from './services/push_notifications';
 
@@ -58,9 +60,16 @@ const AppContainer = createAppContainer(MainNavigator);
 
 const { store, persistor } = configureStore();
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: false,
+    shouldPlaySound: true,
+    shouldSetBadge: true
+  })
+})
 export default class App extends React.Component {
   componentDidMount() {
-    Facebook.initializeAsync('2422058358062134', 'jobapp')
+    Facebook.initializeAsync({ appId: '2422058358062134', appName: 'jobapp' })
     registerForNotifications();
 
     // https://expo.io/dashboard/notifications
@@ -77,21 +86,37 @@ export default class App extends React.Component {
     // put Message Subtitle, and for Message Category
     // you can put Message Category and give badge count 1
 
-    Notifications.addListener((notification) => {
-      const { data: { text }, origin } = notification;
+    Notifications.addNotificationReceivedListener((notification) => {
+      const { request: { content: { title, subtitle, body }}} = notification;
 
-      if (origin === 'received' && text) {
+      if (body) {
         Alert.alert(
-          'New Push Notification',
-          text,
+          title,
+          body,
           [
             { text: 'Okay', style: 'cancel' }, 
             { text: 'Cancel', style: 'destructive' },
-            { text: 'Ask Me Later!'}
+            { text: 'Ask Me Later!' }
           ]
         );
       }
     });
+
+    Notifications.addNotificationResponseReceivedListener((response) => {
+      const { notification: { request: { content: { title, subtitle, body }}}} = response;
+      
+      if (body) {
+        Alert.alert(
+          title,
+          body,
+          [
+            { text: 'Okay', style: 'cancel'},
+            { text: 'Cancel', style: 'destructive' },
+            { text: 'Ask Me Later!' }
+          ]
+        )
+      }
+    })
   }
 
   render() {
@@ -113,3 +138,110 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+
+// Notifications.setNotificationHandler({
+//   handleNotification: async () => ({
+//     shouldShowAlert: true,
+//     shouldPlaySound: true,
+//     shouldSetBadge: true
+//   })
+// })
+
+// export default function App() {
+//   const [expoPushToken, setExpoPushToken] = useState('');
+//   const [notification, setNotification] = useState(false);
+//   const notificationListener = useRef();
+//   const responseListener = useRef();
+
+//   useEffect(() => {
+//     Facebook.initializeAsync({appId: '2422058358062134', appName: 'jobapp'})
+//     registerForPushNotificationsAsync().then(token => setExpoPushToken(token))
+
+//     notificationListener.current = Notifcations.addNotificationReceivedListener(notification => {
+//       setNotification(notification);
+//     })
+
+//     responseListener.current = Notifications.addNotificationResponseReceivedListener(notification => {
+//       console.log(response)
+//     })
+
+//     return () => {
+//       Notifications.removeNotificationSubscription(notificationListener);
+//       Notifications.removeNotificationSubscription(responseListener);
+//     }
+//   }, [])
+
+  // return (
+  //   <View
+  //     style={{
+  //       flex: 1,
+  //       alignItems: 'center',
+  //       justifyContent: 'space-around',
+  //     }}>
+  //     <Text>Your expo push token: {expoPushToken}</Text>
+  //     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+  //       <Text>Title: {notification && notification.request.content.title} </Text>
+  //       <Text>Body: {notification && notification.request.content.body}</Text>
+  //       <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
+  //     </View>
+  //     <Button
+  //       title="Press to schedule a notification"
+  //       onPress={async () => {
+  //         await schedulePushNotification();
+  //       }}
+  //     />
+  //   </View>
+  // );
+  //   return (
+  //   <Provider store={store} >
+  //     <PersistGate loading={null} persistor={persistor} >
+  //       <AppContainer />
+  //     </PersistGate>
+  //   </Provider>
+  // );
+// }
+
+// async function registerForPushNotificationsAsync() {
+//   let token;
+  
+//   if (Constants.isDevice) {
+//     const { status: existingStatus } = await Notifications.getPermissionsAsync();
+//     let finalStatus = existingStatus;
+
+//     if (existingStatus !== 'granted') {
+//       const { status } = await Notifications.requestPermissionsAsync();
+//       finalStatus = status;
+//     }
+
+//     if (finalStatus !== 'granted') {
+//       alert('Failed to get push token for push notification!');
+//       return;
+//     }
+//     token = (await Notifications.getExpoPushTokenAsync().data);
+//   } else {
+//     alert('Must use physical device for Push Notifications!');
+//   }
+
+//   if (Platform.OS === 'android') {
+//     Notifications.setNotificationChannelAsync('default', {
+//       name: 'default',
+//       importance: Notifications.AndroidImportance.MAX,
+//       vibrationPattern: [0, 250, 250, 250],
+//       lightColor: '#FF231F7C',
+//     });
+//   }
+
+//   return token
+// }
+
+// async function schedulePushNotification() {
+//   await Notifications.scheduleNotificationAsync({
+//     content: {
+//       title: "You've got notifications!",
+//       body: "Here is the notification body",
+//       data: { data: 'data goes here'},
+//     },
+//     trigger: { seconds: 5 }
+//   })
+// }
