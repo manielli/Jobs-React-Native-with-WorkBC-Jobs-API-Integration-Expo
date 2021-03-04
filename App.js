@@ -60,6 +60,13 @@ const AppContainer = createAppContainer(MainNavigator);
 
 const { store, persistor } = configureStore();
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: false,
+    shouldPlaySound: true,
+    shouldSetBadge: true
+  })
+})
 export default class App extends React.Component {
   componentDidMount() {
     Facebook.initializeAsync({ appId: '2422058358062134', appName: 'jobapp' })
@@ -80,20 +87,36 @@ export default class App extends React.Component {
     // you can put Message Category and give badge count 1
 
     Notifications.addNotificationReceivedListener((notification) => {
-      const { request: { content: { data: { text } } } } = notification;
+      const { request: { content: { title, subtitle, body }}} = notification;
 
-      if (text) {
+      if (body) {
         Alert.alert(
-          'New Push Notification',
-          text,
+          title,
+          body,
           [
             { text: 'Okay', style: 'cancel' }, 
             { text: 'Cancel', style: 'destructive' },
-            { text: 'Ask Me Later!'}
+            { text: 'Ask Me Later!' }
           ]
         );
       }
     });
+
+    Notifications.addNotificationResponseReceivedListener((response) => {
+      const { notification: { request: { content: { title, subtitle, body }}}} = response;
+      
+      if (body) {
+        Alert.alert(
+          title,
+          body,
+          [
+            { text: 'Okay', style: 'cancel'},
+            { text: 'Cancel', style: 'destructive' },
+            { text: 'Ask Me Later!' }
+          ]
+        )
+      }
+    })
   }
 
   render() {
