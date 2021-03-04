@@ -6,7 +6,7 @@ import {
     LIKE_JOB,
     CLEAR_LIKED_JOBS
 } from './types';
-import { constant } from '../constants';
+import { googlConstants, googleConstants } from '../constants';
 import JOB_DATA from './IndeedJobData.json';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
@@ -57,7 +57,7 @@ export const fetchJobs = (region, callback) => {
 
             let { status } = await Permissions.askAsync(Permissions.LOCATION);
             if (status === 'granted') {
-                Location.setGoogleApiKey(`${constant.apiKey}`);
+                Location.setGoogleApiKey(`${googleConstants.apiKey}`);
             }
             const lastRequestDate = getLastRequestDate();
             const { latitude, longitude } = region;
@@ -118,7 +118,7 @@ const getFilteredData = (data) => {
 
 const buildPlaceRequestUrl = (emplyerName, region) => {
     const query = qs.stringify({ 
-        key: constant.apiKey,
+        key: googleConstants.apiKey,
         radius: 5000, 
         location: `${region.latitude},${region.longitude}`, 
         keyword: `${emplyerName}`
