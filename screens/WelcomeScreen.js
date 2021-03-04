@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import { AppLoading } from 'expo';
+import AppLoading from 'expo-app-loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Slides from '../components/Slides';
 
