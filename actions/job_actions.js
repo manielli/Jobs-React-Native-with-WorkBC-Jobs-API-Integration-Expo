@@ -6,7 +6,7 @@ import {
     LIKE_JOB,
     CLEAR_LIKED_JOBS
 } from './types';
-import { googlConstants, googleConstants } from '../constants';
+import { googleConstants } from '../constants';
 import JOB_DATA from './IndeedJobData.json';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
