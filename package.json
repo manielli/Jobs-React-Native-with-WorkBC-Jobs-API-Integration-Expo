@@ -19,7 +19,7 @@
     "latlng-to-zip": "^0.0.1",
     "lodash": "^4.17.19",
     "mixin-deep": "1.3.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "qs": "^6.7.0",
     "react": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
